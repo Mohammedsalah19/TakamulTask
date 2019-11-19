@@ -1,0 +1,43 @@
+﻿@model IEnumerable<TakamulTaskMohammedSalah.DAL.Department>
+
+@{
+    ViewBag.Title = "DepartmentIndex";
+}
+<br />
+<Center>
+    <p>
+        @Html.ActionLink("اضافة قسم", "AddDepartment", "HR", null, new { @class = "btn btn-info", @style = "background-color:#17a2b8" })
+
+    </p>
+</Center>
+<div class="">
+
+    <table id="dtBasicExample" class="table table-hover table-striped table-bordered" style="word-wrap: break-word;text-align:center left;table-layout:unset" cellspacing="0" width="100%">
+        <thead>
+            <tr class="table-heading " style="background-color:#17a2b8">
+                <th>
+<label>اسم القسم</label>
+                </th>
+                <th>
+                    (Atcion)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.D_Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("تعديل", "EditDepartMent", new { D_ID = item.D_ID }, new { @class = "btn btn-info", @style = "background-color:#17a2b8" })
+                        @Html.ActionLink("حذف", "DeleteDepartMent", new { D_ID = item.D_ID }, new { @class = "btn btn-info", @style = "background-color:#17a2b8" })
+
+                 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

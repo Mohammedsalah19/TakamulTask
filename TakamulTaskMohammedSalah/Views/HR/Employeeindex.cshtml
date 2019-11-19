@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TakamulTaskMohammedSalah.DAL.Employee>
+
+@{
+    ViewBag.Title = "Employeeindex";
+}
+
+<h2>Employeeindex</h2>
+
+<p>
+    @Html.ActionLink("اضافه موظف", "AddEmployee")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Em_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department.D_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Em_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department.D_Name)
+        </td>
+        <td>
+            @Html.ActionLink("EditEmployee", "EditEmployee", new { Em_ID = item.Em_ID }) |
+             @Html.ActionLink("Delete", "DeleteEmployee", new { Em_ID = item.Em_ID })
+        </td>
+    </tr>
+}
+
+</table>

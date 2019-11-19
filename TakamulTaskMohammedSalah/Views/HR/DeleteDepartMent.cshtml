@@ -1,0 +1,36 @@
+﻿@model TakamulTaskMohammedSalah.DAL.Department
+
+@{
+    ViewBag.Title = "DeleteDepartMent";
+}
+
+
+<h3 style="direction:rtl">متأكد من الحذف؟</h3>
+<center>
+    <div>
+        <hr />
+        <dl class="">
+            <dt>
+                <label>اسم القسم</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.D_Name)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </div>
+        }
+    </div>
+</center>
+
+<div>
+    @Html.ActionLink("Back to List", "DepartmentIndex")
+</div>

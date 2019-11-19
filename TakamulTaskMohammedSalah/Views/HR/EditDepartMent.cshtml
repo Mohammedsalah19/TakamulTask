@@ -1,0 +1,40 @@
+﻿@model TakamulTaskMohammedSalah.DAL.Department
+
+@{
+    ViewBag.Title = "EditDepartMent";
+}
+
+<center>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Department</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.D_ID)
+
+            <div class="form-group">
+                <label>اسم القسم</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.D_Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.D_Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="  col-md-12">
+                    <input type="submit" value="حفظ" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+    }
+</center>
+<div>
+    @Html.ActionLink("Back to List", "DepartmentIndex")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
