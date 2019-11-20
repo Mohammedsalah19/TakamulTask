@@ -97,9 +97,30 @@ namespace TakamulTaskMohammedSalah.Controllers
 
         }
 
+        public JsonResult DeleteDepart(int D_ID)
+        {
+            bool result = false;
+            var model = _db.Employees.Where(f => f.D_ID == D_ID).ToList();
+            if (model.Count() == 0)
+            {
+                try
+                {
+                     _db.DeleteDepartment(D_ID);
+                     result = true;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
-       public ActionResult Employeeindex()
+
+
+        public ActionResult Employeeindex()
         {
             var model = _db.Employees.ToList();
             return View(model);
@@ -180,5 +201,19 @@ namespace TakamulTaskMohammedSalah.Controllers
 
         }
 
+
+
+        public JsonResult DeleteEmp(int? Em_ID)
+        {
+            bool result = false;
+             if (Em_ID != null)
+            {
+                _db.DeleteEmployee(Em_ID);
+
+                result = true;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

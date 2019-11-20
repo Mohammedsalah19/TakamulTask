@@ -3,36 +3,93 @@
 @{
     ViewBag.Title = "Employeeindex";
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
-<h2>Employeeindex</h2>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
 
-<p>
-    @Html.ActionLink("اضافه موظف", "AddEmployee")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Em_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Department.D_Name)
-        </th>
-        <th></th>
-    </tr>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteStudentRecord = function (Em_ID) {
+        $("#pa").val(Em_ID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var value = $("#pa").val()
+        $.ajax({
+            type: "POST",
+            url: "/HR/DeleteEmp?Em_ID=" + value,
+            success: function (result) {
+                $("#DeleteConfirmation").modal("hide");
+                location.reload();
+            }
+        })
+    }
+</script>
+<br />
+<Center>
+    <p>
+        @Html.ActionLink("اضافة موظف", "AddEmployee", "HR", null, new { @class = "btn btn-info", @style = "background-color:#17a2b8" })
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Em_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Department.D_Name)
-        </td>
-        <td>
-            @Html.ActionLink("EditEmployee", "EditEmployee", new { Em_ID = item.Em_ID }) |
-             @Html.ActionLink("Delete", "DeleteEmployee", new { Em_ID = item.Em_ID })
-        </td>
-    </tr>
-}
+    </p>
+</Center>
 
-</table>
+<div class="">
+
+    <table id="dtBasicExample" class="table table-hover table-striped table-bordered" style="word-wrap: break-word;text-align:center left;table-layout:unset" cellspacing="0" width="100%">
+        <thead>
+            <tr class="table-heading " style="background-color:#17a2b8">
+                <th>
+                    <label>اسم القسم</label>
+                </th>
+                <th>
+                    <label>اسم القسم</label>
+                </th>
+                <th>
+                    (Action)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Em_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.D_Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("تعديل", "EditEmployee", new { Em_ID = item.Em_ID }, new { @class = "btn btn-info", @style = "background-color:#17a2b8" })
+
+                        <button class="btn btn-danger" onclick="DeleteStudentRecord(@item.Em_ID);" value=""><span class='glyphicon glyphicon-trash'> حذف</span></button>
+                        <p hidden id="pa" class="pa">@item.Em_ID</p>
+                        @*@Html.ActionLink("Delete", "DeleteEmployee", new { Em_ID = item.Em_ID })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    @Html.ActionLink("الانتقال الى صفحه الاقسام", "DepartmentIndex")
+</div>
+
+<div class="modal fade text-right" id="DeleteConfirmation" style="direction:rtl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>حذف موظف</h4>
+            </div>
+            <div class="modal-body">
+                <h2>متأكل من الحذف؟</h2>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal" id="r">رجوع</a>
+                <a href="#" class="btn btn-danger" onclick="ConfirmDelete()">حذف</a>
+            </div>
+        </div>
+    </div>
+</div>

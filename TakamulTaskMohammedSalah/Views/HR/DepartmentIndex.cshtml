@@ -3,6 +3,29 @@
 @{
     ViewBag.Title = "DepartmentIndex";
 }
+
+
+
+<script>
+    var ConfirmDelete = function (D_ID) {
+        var ff = D_ID;
+        $.ajax({
+            type: "POST",
+            url: "/HR/DeleteDepart?D_ID=" + D_ID,
+            success: function (result) {
+
+                if (result == false) {
+                    $("#DeleteConfirmation").modal("show");
+
+                }
+                else {
+                    location.reload(true);
+
+                }
+            }
+        })
+    }
+</script>
 <br />
 <Center>
     <p>
@@ -16,7 +39,7 @@
         <thead>
             <tr class="table-heading " style="background-color:#17a2b8">
                 <th>
-<label>اسم القسم</label>
+                    <label>اسم القسم</label>
                 </th>
                 <th>
                     (Atcion)
@@ -32,12 +55,30 @@
                     </td>
                     <td>
                         @Html.ActionLink("تعديل", "EditDepartMent", new { D_ID = item.D_ID }, new { @class = "btn btn-info", @style = "background-color:#17a2b8" })
-                        @Html.ActionLink("حذف", "DeleteDepartMent", new { D_ID = item.D_ID }, new { @class = "btn btn-info", @style = "background-color:#17a2b8" })
-
-                 
+                         <button class="btn btn-danger " onclick="ConfirmDelete(@item.D_ID);" id="SaveRecord" value=""><span class='glyphicon glyphicon-trash'> حذف</span></button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+</div>
+<div>
+    @Html.ActionLink("الانتقال الى صفحه الموظفين", "Employeeindex")
+</div>
+<div class="modal fade" id="DeleteConfirmation">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 style="text-align:right;direction:rtl">شكرا لتفهمك</h4>
+            </div>
+            <div class="modal-body">
+                <h4 style="text-align:right">عذرا لا نستطيع ان نقوم بعملية الحذف الان بسبب ارتباط المعلومات ببعضها؟</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal" id="r">الرجوع</a>
+                @*<a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Confirm</a>*@
+            </div>
+        </div>
+    </div>
 </div>
